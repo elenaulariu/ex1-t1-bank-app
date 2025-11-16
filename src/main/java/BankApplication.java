@@ -11,8 +11,13 @@ import com.luxoft.bankapp.model.Client.Gender;
 import com.luxoft.bankapp.service.storage.ClientRepository;
 import com.luxoft.bankapp.service.storage.MapClientRepository;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+@Configuration
+@ComponentScan("com.luxoft.bankapp")
 public class BankApplication {
 
     private static final String[] CLIENT_NAMES =
@@ -20,8 +25,9 @@ public class BankApplication {
 
     public static void main(String[] args) {
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("test-clients.xml");
-
+        //ApplicationContext context = new ClassPathXmlApplicationContext("test-clients.xml");
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(BankApplication.class);
         //ClientRepository repository = new MapClientRepository();
         Banking banking = initialize(context);
 
@@ -113,20 +119,20 @@ public class BankApplication {
 
         Banking banking = (Banking) context.getBean("banking");
 
-//        Client client_1 = new Client(CLIENT_NAMES[0], Gender.MALE);
-//
-//        AbstractAccount savingAccount = new SavingAccount(1000);
-//        client_1.addAccount(savingAccount);
-//
-//        AbstractAccount checkingAccount = new CheckingAccount(1000);
-//        client_1.addAccount(checkingAccount);
-//
-//        Client client_2 = new Client(CLIENT_NAMES[1], Gender.MALE);
-//
-//        AbstractAccount checking = new CheckingAccount(1500);
-//        client_2.addAccount(checking);
-        Client client_1 = (Client) context.getBean("client1");
-        Client client_2 = (Client) context.getBean("client2");
+        Client client_1 = new Client(CLIENT_NAMES[0], Gender.MALE);
+
+        AbstractAccount savingAccount = new SavingAccount(1000);
+        client_1.addAccount(savingAccount);
+
+        AbstractAccount checkingAccount = new CheckingAccount(1000);
+        client_1.addAccount(checkingAccount);
+
+        Client client_2 = new Client(CLIENT_NAMES[1], Gender.MALE);
+
+        AbstractAccount checking = new CheckingAccount(1500);
+        client_2.addAccount(checking);
+//        Client client_1 = (Client) context.getBean("client1");
+//        Client client_2 = (Client) context.getBean("client2");
 
         banking.addClient(client_1);
         banking.addClient(client_2);
