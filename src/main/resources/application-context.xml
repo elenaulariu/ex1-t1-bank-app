@@ -16,4 +16,8 @@
 
     <bean id="bankReport" class="com.luxoft.bankapp.service.BankReportServiceImpl"/>
 
+    <bean id="bankReport" class="com.luxoft.bankapp.service.BankReportServiceImpl">
+        <property name="repository" ref="repository"/>
+    </bean>
+
 </beans>
